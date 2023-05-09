@@ -56,7 +56,13 @@
         }
       ],
       "drc_exclusions": [
+        "clearance|180000000|46900000|434023aa-eed2-4083-9dc4-f249331d0225|f2592f03-6da0-4baf-b962-6554282b13f5",
+        "courtyards_overlap|179125250|43978133|818c85e0-ff45-4ea9-b6c2-c64d6019b3a1|6bcf94e4-7a96-452a-a828-2a29157b27c1",
+        "courtyards_overlap|193700001|115120001|09fd3743-6e91-4cee-973d-5b7ad2c55c00|6dd61b84-5c2b-4c8a-9aa4-1f09148d6eaa",
+        "courtyards_overlap|194450001|121500001|6dd61b84-5c2b-4c8a-9aa4-1f09148d6eaa|af9066fe-44c3-4aa4-afd4-d6e364cd5343",
         "courtyards_overlap|206712501|73150001|6dd61b84-5c2b-4c8a-9aa4-1f09148d6eaa|af9066fe-44c3-4aa4-afd4-d6e364cd5343",
+        "courtyards_overlap|227700001|107120001|09fd3743-6e91-4cee-973d-5b7ad2c55c00|6dd61b84-5c2b-4c8a-9aa4-1f09148d6eaa",
+        "courtyards_overlap|228450001|113500001|6dd61b84-5c2b-4c8a-9aa4-1f09148d6eaa|af9066fe-44c3-4aa4-afd4-d6e364cd5343",
         "lib_footprint_mismatch|144950000|59321131|22d8aceb-58ed-4d91-9909-8f63880b1db1|00000000-0000-0000-0000-000000000000",
         "lib_footprint_mismatch|144950000|59528869|22d8aceb-58ed-4d91-9909-8f63880b1db1|00000000-0000-0000-0000-000000000000",
         "lib_footprint_mismatch|186823750|61450000|27cf8e59-6110-44cb-a02c-d64275eb0d98|00000000-0000-0000-0000-000000000000",
@@ -65,16 +71,20 @@
         "lib_footprint_mismatch|199400000|81649999|bea59aa9-0a9d-4cc9-a7eb-f358699adbf4|00000000-0000-0000-0000-000000000000",
         "lib_footprint_mismatch|199400000|82899999|b7fa4e76-6673-414e-96ca-5a05a8fe6807|00000000-0000-0000-0000-000000000000",
         "lib_footprint_mismatch|199400000|84149999|2f3c3cf1-49b4-4c6b-a113-093d2db296d8|00000000-0000-0000-0000-000000000000",
+        "lib_footprint_mismatch|224000000|53278869|8bbda9bc-a56a-4c74-a56a-966685621922|00000000-0000-0000-0000-000000000000",
         "silk_edge_clearance|139050000|54050000|5b64ca3b-26f3-49f5-8074-efe2335e632a|db76ce3c-4bf4-4409-b9e7-5e68f3aae283",
         "silk_edge_clearance|139050000|54100000|5b64ca3b-26f3-49f5-8074-efe2335e632a|3a9e1d4b-b8ea-4a0d-9e4e-a5fd985c607c",
         "silk_edge_clearance|139050000|54100000|5b64ca3b-26f3-49f5-8074-efe2335e632a|ac5ed9dc-11ac-4046-ad23-b872e8f367f1",
         "silk_edge_clearance|139050000|64750000|5b64ca3b-26f3-49f5-8074-efe2335e632a|3a9e1d4b-b8ea-4a0d-9e4e-a5fd985c607c",
         "silk_edge_clearance|139050000|64750000|5b64ca3b-26f3-49f5-8074-efe2335e632a|ac5ed9dc-11ac-4046-ad23-b872e8f367f1",
         "silk_edge_clearance|139050000|64800000|5b64ca3b-26f3-49f5-8074-efe2335e632a|db76ce3c-4bf4-4409-b9e7-5e68f3aae283",
+        "silk_edge_clearance|177000000|108200000|5b64ca3b-26f3-49f5-8074-efe2335e632a|6a2769e1-f290-4c1c-ac17-961c9b5e6da8",
+        "silk_edge_clearance|177000000|113800000|5b64ca3b-26f3-49f5-8074-efe2335e632a|6498c7ad-fda3-4e83-a25d-dd88b7c1f119",
         "silk_edge_clearance|197000000|54160000|a1becc60-5992-4276-9f54-ff528cfbea56|e29bb91f-8988-4341-a8ca-12fc0935ee59",
         "silk_edge_clearance|197000000|70900000|a1becc60-5992-4276-9f54-ff528cfbea56|89edcb2c-df7d-443a-866b-f62033cfb444",
         "silk_edge_clearance|202200000|92400000|e29faa8c-11d9-42b5-9b36-fbabaf320a88|0414eebc-1e45-40c6-acc1-bfe2f6de812a",
-        "silk_edge_clearance|207800000|92400000|e29faa8c-11d9-42b5-9b36-fbabaf320a88|ade76f28-ea0f-4d13-8cea-a98b3b20ab54"
+        "silk_edge_clearance|207800000|92400000|e29faa8c-11d9-42b5-9b36-fbabaf320a88|ade76f28-ea0f-4d13-8cea-a98b3b20ab54",
+        "silk_edge_clearance|231900000|46231886|5ce7c4ea-4797-4a3a-8070-e6d93c563c34|fb7517a6-1aa4-49bb-afeb-be2ca377c99d"
       ],
       "meta": {
         "version": 2
@@ -133,7 +143,7 @@
         "max_error": 0.005,
         "min_clearance": 0.0,
         "min_connection": 0.0,
-        "min_copper_edge_clearance": 0.0,
+        "min_copper_edge_clearance": 0.5,
         "min_hole_clearance": 0.25,
         "min_hole_to_hole": 0.25,
         "min_microvia_diameter": 0.19999999999999998,
@@ -469,7 +479,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "Morten-sol-vindue.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
