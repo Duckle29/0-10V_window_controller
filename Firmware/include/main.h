@@ -4,7 +4,7 @@
 
 #include "sht4x.h"
 
-//#define NO_SERIAL
+#define NO_SERIAL
 
 const uint8_t pin_feedback = PIN_PA3;
 const uint8_t pin_dac = PIN_PA6;
@@ -16,22 +16,27 @@ const uint8_t unused_pins[] = {
     PIN_PA1, PIN_PA2, PIN_PA7
 };
 
-const uint16_t dial_range[] = {8, 740};
+const uint16_t dial_range[] = {10, 985};
 const uint16_t closed_range[] = {2000, 5000}; // 20-50C
 const uint16_t open_range[] = {1000, 4000}; // 10-40C
 const uint16_t max_temp = 12500; // 0-125C. uint will overflow to >600C
 const uint8_t pos_out_range[] = {20, 235}; // 0.784 - 9.22V. Actuator closed-open range is 1-9V
 
 // Actuator should be able to move a full 400mm stroke in ~90s
-const uint16_t pos_timeout = 120; // [s]
+const uint16_t pos_timeout = 10; // [s]
 const uint16_t pos_deadband_mm = 10; // [mm]
 const uint16_t stroke = 400; // [mm]
 
 const uint8_t pos_deadband_ticks = pos_deadband_mm * 255 / stroke; // [DAC ticks]
  
+// As the mcu sleeps most of the time, we can't rely on millis()
+uint16_t ticks = 0;
+const uint16_t tick_rate = 2;
+const uint16_t pos_timeout_ticks = pos_timeout * tick_rate;
+
 uint16_t sp_closed, sp_open;
 uint8_t old_pos, new_pos = 0;
-uint32_t deadline = 0 + 2*pos_timeout;
+uint16_t deadline = 0 + 2*pos_timeout_ticks;
 
 bool force_close, force_open = false;
 

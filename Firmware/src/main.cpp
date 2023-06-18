@@ -32,7 +32,7 @@ void RTC_init()
 
   RTC.PITINTCTRL = RTC_PI_bm;           /* PIT Interrupt: enabled */
 
-  RTC.PITCTRLA = RTC_PERIOD_CYC32768_gc /* RTC Clock Cycles 16384, resulting in 32.768kHz/16384 = 1Hz */
+  RTC.PITCTRLA = RTC_PERIOD_CYC16384_gc /* RTC Clock Cycles 16384, resulting in 32.768kHz/16384 = 2Hz */
   | RTC_PITEN_bm;                       /* Enable PIT counter: enabled */
 }
 
@@ -80,41 +80,43 @@ void loop()
     if (closed_ticks < (dial_range[0]>>1))
     {
         // Manual close override
-        analogWrite(pin_dac, pos_out_range[0]);
+        new_pos = pos_out_range[0];
         force_close = true;
         force_open = false;
+    }
+    else
+    {
+        sp_closed = map(
+                closed_ticks, 
+                dial_range[0], dial_range[1], 
+                closed_range[0], closed_range[1]
+            );
     }
 
     if (open_ticks < (dial_range[0]>>1))
     {
         // Manual open override
-        analogWrite(pin_dac, pos_out_range[1]);
+        new_pos = pos_out_range[1];
         force_close = false;
         force_open = true;
     }
-    else if(!force_close && !force_open)
+    else
     {
-        
-
-        sp_closed = map(
-                    closed_ticks, 
-                    dial_range[0], dial_range[1], 
-                    closed_range[0], closed_range[1]
-                );
-        
         sp_open = map(
-                    open_ticks,
-                    dial_range[0], dial_range[1], 
-                    open_range[0], open_range[1]
-                );     
-        
+                open_ticks,
+                dial_range[0], dial_range[1], 
+                open_range[0], open_range[1]
+            );  
+    } 
+
+    if(!force_close && !force_open)
+    {
         new_pos = get_pos_out(temperature, sp_closed, sp_open);
 
         if(abs(new_pos-old_pos) > pos_deadband_ticks)
         {
             old_pos = new_pos;
-            deadline = millis() + pos_timeout;
-            analogWrite(pin_dac, new_pos);
+            deadline = ticks + pos_timeout_ticks;
         }
     }
     else
@@ -129,23 +131,34 @@ void loop()
         }
     }
 
+    analogWrite(pin_dac, new_pos);
 
-    
-#ifndef NO_SERIAL
-    Serial.print("T:"); Serial.print(sht40.get_temp());
-    Serial.print(",RH:"); Serial.println(sht40.get_humi());
-#endif
+
+    uint8_t actual_pos = analogRead(pin_feedback)>>2;
 
     // If position error too big for too long, re-init actuator
-    if (abs(new_pos-old_pos) > pos_deadband_ticks && millis() > deadline)
+    if (abs(new_pos-actual_pos) > pos_deadband_ticks && ticks > deadline)
     {
-        deadline = millis() + pos_timeout;
-        digitalWrite(pin_dac, 0);
+        deadline = ticks + pos_timeout_ticks;
+        analogWrite(pin_dac, 0);
         delay(500);
+        analogWrite(pin_dac, new_pos);
     }
 
     // for example have a shrinking max allowable error over time.
     //      - meh
+    
+
+#ifndef NO_SERIAL
+    Serial.print("T"); Serial.print(temperature);
+    //Serial.print(" C"); Serial.print(sp_closed);
+    //Serial.print(" O"); Serial.print(sp_open);
+    Serial.print(" T"); Serial.print(new_pos);
+    Serial.print(" D"); Serial.print(actual_pos);
+    Serial.print(" F"); Serial.print(force_open); Serial.println(force_close);
+#endif
+
+    ticks++;
     go_sleep();
 }
 
